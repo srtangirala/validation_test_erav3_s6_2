@@ -1,0 +1,45 @@
+name: Model Parameters Check
+
+on:
+  push:
+    paths:
+      - 'src/model.py'
+  pull_request:
+    paths:
+      - 'src/model.py'
+
+jobs:
+  check-parameters:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install torch
+
+    - name: Check model parameters
+      run: |
+        python - <<EOF
+        import torch
+        import sys
+        sys.path.append('src')
+        from model import Net
+
+        model = Net()
+        total_params = sum(p.numel() for p in model.parameters())
+        print(f'Total parameters: {total_params}')
+        
+        if total_params >= 20000:
+            print(f'Error: Model has {total_params} parameters, which exceeds the limit of 20,000')
+            sys.exit(1)
+        else:
+            print(f'Success: Model has {total_params} parameters, which is within the limit')
+        EOF 

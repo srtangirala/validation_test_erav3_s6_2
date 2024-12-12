@@ -27,6 +27,8 @@ ENV/
 .env
 .venv
 .venv/
+/data/
+/.venv/
 
 # PyTorch specific
 *.pth

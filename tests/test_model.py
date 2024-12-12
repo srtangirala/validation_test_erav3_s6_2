@@ -1,6 +1,7 @@
 import pytest
 import torch
 import sys
+import inspect
 sys.path.append('src')
 from model import Net
 

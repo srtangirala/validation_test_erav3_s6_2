@@ -2,13 +2,7 @@ name: Model Parameters Check
 
 on:
   push:
-    paths:
-      - 'src/model.py'
-      - 'tests/test_model.py'
   pull_request:
-    paths:
-      - 'src/model.py'
-      - 'tests/test_model.py'
 
 jobs:
   check-parameters:
